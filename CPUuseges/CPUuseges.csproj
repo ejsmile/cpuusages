@@ -55,6 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InfoCounter.cs" />
+    <Compile Include="IProcessCpuCounter.cs" />
+    <Compile Include="ProcessCpuCounter.cs" />
+    <Compile Include="ProcessInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
