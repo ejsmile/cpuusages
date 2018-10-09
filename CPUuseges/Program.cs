@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using CPUuseges.Helper;
 using Topshelf;
 
@@ -12,8 +13,12 @@ namespace CPUuseges
             logger.Info("Start");
 
             var processCpuCounter = new ProcessCpuCounter();
-            var intervalMilliSecond = 20 * 1000;
-            var applicationName = "Client";
+            if (!long.TryParse(ConfigurationManager.AppSettings["intervalMilliSecond"], out var intervalMilliSecond))
+            {
+                intervalMilliSecond = 20 * 1000;
+            }
+            var applicationName = ConfigurationManager.AppSettings["Client"];
+
             try
             {
                 var rc = HostFactory.Run(x =>
