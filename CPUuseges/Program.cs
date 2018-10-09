@@ -6,12 +6,14 @@ using System.Linq;
 using System.Management;
 using System.Threading;
 
-namespace WMISample
+namespace CPUuseges
 {
-    public class MyWMIQuery
+    public class Core
     {
         static void Main(string[] args)
         {
+            var logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Start");
             var dist = new Dictionary<ProcessInfo, int>();
             while (!Console.KeyAvailable)
             {
@@ -35,7 +37,7 @@ namespace WMISample
                     delta[item.Description] = 0;
                 }
 
-                Console.WriteLine($"{DateTime.Now}  Client instans run {delta.Keys.Count} ");
+                logger.Info($"Client instans run {delta.Keys.Count} ");
 
                 for (var i = 0; i < 10; i++)
                 {
@@ -55,7 +57,7 @@ namespace WMISample
                         }
                     }
                 }
-
+                 
                 foreach (var key in delta.Keys)
                 {
                     if (delta[key] / 10 > 15)
@@ -71,18 +73,16 @@ namespace WMISample
                             dist.Remove(key);
                     }
                 }
-
-                Console.WriteLine($"{DateTime.Now} Cpu over 15 % max duration {(dist.Any() ? dist.Values.Max() : 0) * 10} in sec ");
+                logger.Info($"Cpu over 15 % max duration {(dist.Any() ? dist.Values.Max() : 0) * 10} in sec");
 
                 foreach (var candidate in dist.Where(d => d.Value > 6 * 5))
                 {
-                    Console.WriteLine($"Warrings {DateTime.Now} {candidate.Key.Pid} {candidate.Key.Name} {candidate.Value * 10} sec -  Cpu over 15% time ");
+                    logger.Warn($"{candidate.Key.Pid} {candidate.Key.Name} {candidate.Value * 10} sec -  Cpu over 15% time ");
                 }
             }
+            logger.Info("Finish");
         }
     }
-
-
 
     public struct ProcessInfo
     {
