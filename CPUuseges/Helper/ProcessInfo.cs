@@ -1,4 +1,4 @@
-﻿namespace CPUuseges
+﻿namespace CPUuseges.Helper
 {
     public struct ProcessInfo
     {
@@ -30,5 +30,4 @@
             return !(left == right);
         }
     }
-
 }

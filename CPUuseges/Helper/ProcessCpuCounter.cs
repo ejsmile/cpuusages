@@ -5,14 +5,17 @@ using System.IO;
 using System.Linq;
 using System.Management;
 
-namespace CPUuseges
+namespace CPUuseges.Helper
 {
     public class ProcessCpuCounter : IProcessCpuCounter
     {
         public IEnumerable<int> GetProcessesIdByName(string name)
-        { 
+        {
             return Process.GetProcessesByName(name).Select(p => p.Id);
         }
+
+        public InfoCounter GetPerfCounterForProcessId(int processId)
+        => GetPerfCounterForProcessId(processId, "% Processor Time");
 
         public InfoCounter GetPerfCounterForProcessId(int processId, string processCounterName = "% Processor Time")
         {

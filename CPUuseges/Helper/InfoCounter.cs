@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace CPUuseges
+namespace CPUuseges.Helper
 {
     public class InfoCounter
     {
